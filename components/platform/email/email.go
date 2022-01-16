@@ -107,12 +107,12 @@ func checkTime(email *imap.Email, startTime time.Time) bool {
 	return false
 }
 
-func filterTags(email map[int]*imap.Email, tags, blackListSenders []string, startTime time.Time) ([]int, error) {
+func filterTags(emails map[int]*imap.Email, tags, blackListSenders []string, startTime time.Time) ([]int, error) {
 	if len(tags) == 0 {
 		return nil, fmt.Errorf("no tags provided")
 	}
 	filteredUIDs := make([]int, 0)
-	for _, email := range email {
+	for _, email := range emails {
 		for _, tag := range tags {
 			lowerTag := strings.ToLower(tag)
 			lowerSubject := strings.ToLower(email.Subject)
