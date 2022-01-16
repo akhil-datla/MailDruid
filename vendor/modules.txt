@@ -1,0 +1,268 @@
+# github.com/BrianLeishman/go-imap v0.0.0-20211119130856-d77b6caaf70d
+## explicit
+github.com/BrianLeishman/go-imap
+# github.com/JesusIslam/tldr v0.6.0
+## explicit
+github.com/JesusIslam/tldr
+# github.com/Masterminds/semver v1.4.2
+## explicit
+github.com/Masterminds/semver
+# github.com/Masterminds/sprig v2.16.0+incompatible
+## explicit
+github.com/Masterminds/sprig
+# github.com/PuerkitoBio/goquery v1.5.0
+## explicit
+github.com/PuerkitoBio/goquery
+# github.com/StirlingMarketingGroup/go-retry v0.0.0-20190512160921-94a8eb23e893
+## explicit
+github.com/StirlingMarketingGroup/go-retry
+# github.com/afjoseph/RAKE.go v0.0.0-20191109090147-068a9e43b194
+## explicit
+github.com/afjoseph/RAKE.go
+# github.com/alixaxel/pagerank v0.0.0-20160306110729-14bfb4c1d88c
+## explicit
+github.com/alixaxel/pagerank
+# github.com/andybalholm/cascadia v1.0.0
+## explicit
+github.com/andybalholm/cascadia
+# github.com/aokoli/goutils v1.0.1
+## explicit
+github.com/aokoli/goutils
+# github.com/atomicgo/cursor v0.0.1
+## explicit; go 1.15
+github.com/atomicgo/cursor
+# github.com/cention-sany/utf7 v0.0.0-20170124080048-26cad61bd60a
+## explicit
+github.com/cention-sany/utf7
+# github.com/davecgh/go-spew v1.1.1
+## explicit
+github.com/davecgh/go-spew/spew
+# github.com/dustin/go-humanize v1.0.0
+## explicit
+github.com/dustin/go-humanize
+# github.com/fogleman/gg v1.3.0
+## explicit
+github.com/fogleman/gg
+# github.com/gofrs/uuid v4.0.0+incompatible
+## explicit
+github.com/gofrs/uuid
+# github.com/gogs/chardet v0.0.0-20191104214054-4b6791f73a28
+## explicit
+github.com/gogs/chardet
+# github.com/golang-jwt/jwt v3.2.2+incompatible
+## explicit
+github.com/golang-jwt/jwt
+# github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
+## explicit
+github.com/golang/freetype/raster
+github.com/golang/freetype/truetype
+# github.com/google/uuid v1.0.0
+## explicit
+github.com/google/uuid
+# github.com/gookit/color v1.4.2
+## explicit; go 1.12
+github.com/gookit/color
+# github.com/gorilla/css v1.0.0
+## explicit
+github.com/gorilla/css/scanner
+# github.com/huandu/xstrings v1.2.0
+## explicit
+github.com/huandu/xstrings
+# github.com/imdario/mergo v0.3.6
+## explicit
+github.com/imdario/mergo
+# github.com/jackc/chunkreader/v2 v2.0.1
+## explicit; go 1.12
+github.com/jackc/chunkreader/v2
+# github.com/jackc/pgconn v1.10.1
+## explicit; go 1.12
+github.com/jackc/pgconn
+github.com/jackc/pgconn/internal/ctxwatch
+github.com/jackc/pgconn/stmtcache
+# github.com/jackc/pgio v1.0.0
+## explicit; go 1.12
+github.com/jackc/pgio
+# github.com/jackc/pgpassfile v1.0.0
+## explicit; go 1.12
+github.com/jackc/pgpassfile
+# github.com/jackc/pgproto3/v2 v2.2.0
+## explicit; go 1.12
+github.com/jackc/pgproto3/v2
+# github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b
+## explicit; go 1.14
+github.com/jackc/pgservicefile
+# github.com/jackc/pgtype v1.9.0
+## explicit; go 1.13
+github.com/jackc/pgtype
+# github.com/jackc/pgx/v4 v4.14.0
+## explicit; go 1.13
+github.com/jackc/pgx/v4
+github.com/jackc/pgx/v4/internal/sanitize
+github.com/jackc/pgx/v4/stdlib
+# github.com/jaytaylor/html2text v0.0.0-20200412013138-3577fbdbcff7
+## explicit
+github.com/jaytaylor/html2text
+# github.com/jhillyerd/enmime v0.9.2
+## explicit; go 1.13
+github.com/jhillyerd/enmime
+github.com/jhillyerd/enmime/internal/coding
+github.com/jhillyerd/enmime/internal/stringutil
+github.com/jhillyerd/enmime/mediatype
+# github.com/jinzhu/inflection v1.0.0
+## explicit
+github.com/jinzhu/inflection
+# github.com/jinzhu/now v1.1.3
+## explicit; go 1.12
+github.com/jinzhu/now
+# github.com/labstack/echo/v4 v4.6.1
+## explicit; go 1.15
+github.com/labstack/echo/v4
+github.com/labstack/echo/v4/middleware
+# github.com/labstack/gommon v0.3.0
+## explicit; go 1.12
+github.com/labstack/gommon/bytes
+github.com/labstack/gommon/color
+github.com/labstack/gommon/log
+github.com/labstack/gommon/random
+# github.com/lib/pq v1.10.2
+## explicit; go 1.13
+github.com/lib/pq
+github.com/lib/pq/oid
+github.com/lib/pq/scram
+# github.com/logrusorgru/aurora v2.0.3+incompatible
+## explicit
+github.com/logrusorgru/aurora
+# github.com/matcornic/hermes/v2 v2.1.0
+## explicit; go 1.13
+github.com/matcornic/hermes/v2
+# github.com/mattn/go-colorable v0.1.8
+## explicit; go 1.13
+github.com/mattn/go-colorable
+# github.com/mattn/go-isatty v0.0.14
+## explicit; go 1.12
+github.com/mattn/go-isatty
+# github.com/mattn/go-runewidth v0.0.13
+## explicit; go 1.9
+github.com/mattn/go-runewidth
+# github.com/olekukonko/tablewriter v0.0.5
+## explicit; go 1.12
+github.com/olekukonko/tablewriter
+# github.com/pkg/errors v0.9.1
+## explicit
+github.com/pkg/errors
+# github.com/psykhi/wordclouds v0.0.0-20210822210240-4b9d0b119a32
+## explicit; go 1.13
+github.com/psykhi/wordclouds
+# github.com/pterm/pterm v0.12.33
+## explicit; go 1.15
+github.com/pterm/pterm
+github.com/pterm/pterm/internal
+# github.com/rivo/uniseg v0.2.0
+## explicit; go 1.12
+github.com/rivo/uniseg
+# github.com/russross/blackfriday/v2 v2.0.1
+## explicit
+github.com/russross/blackfriday/v2
+# github.com/satori/go.uuid v1.2.0
+## explicit
+github.com/satori/go.uuid
+# github.com/shurcooL/sanitized_anchor_name v1.0.0
+## explicit
+github.com/shurcooL/sanitized_anchor_name
+# github.com/ssor/bom v0.0.0-20170718123548-6386211fdfcf
+## explicit
+github.com/ssor/bom
+# github.com/valyala/bytebufferpool v1.0.0
+## explicit
+github.com/valyala/bytebufferpool
+# github.com/valyala/fasttemplate v1.2.1
+## explicit; go 1.12
+github.com/valyala/fasttemplate
+# github.com/vanng822/css v0.0.0-20190504095207-a21e860bcd04
+## explicit
+github.com/vanng822/css
+# github.com/vanng822/go-premailer v0.0.0-20191214114701-be27abe028fe
+## explicit
+github.com/vanng822/go-premailer/premailer
+# github.com/xo/terminfo v0.0.0-20210125001918-ca9a967f8778
+## explicit; go 1.15
+github.com/xo/terminfo
+# golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
+## explicit; go 1.17
+golang.org/x/crypto/acme
+golang.org/x/crypto/acme/autocert
+golang.org/x/crypto/pbkdf2
+golang.org/x/crypto/scrypt
+# golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8
+## explicit; go 1.12
+golang.org/x/image/draw
+golang.org/x/image/font
+golang.org/x/image/font/basicfont
+golang.org/x/image/math/f64
+golang.org/x/image/math/fixed
+# golang.org/x/net v0.0.0-20210913180222-943fd674d43e
+## explicit; go 1.17
+golang.org/x/net/html
+golang.org/x/net/html/atom
+golang.org/x/net/html/charset
+golang.org/x/net/http/httpguts
+golang.org/x/net/http2
+golang.org/x/net/http2/h2c
+golang.org/x/net/http2/hpack
+golang.org/x/net/idna
+# golang.org/x/sys v0.0.0-20211013075003-97ac67df715c
+## explicit; go 1.17
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/plan9
+golang.org/x/sys/unix
+golang.org/x/sys/windows
+# golang.org/x/term v0.0.0-20210927222741-03fcf44c2211
+## explicit; go 1.17
+golang.org/x/term
+# golang.org/x/text v0.3.7
+## explicit; go 1.17
+golang.org/x/text/cases
+golang.org/x/text/encoding
+golang.org/x/text/encoding/charmap
+golang.org/x/text/encoding/htmlindex
+golang.org/x/text/encoding/internal
+golang.org/x/text/encoding/internal/identifier
+golang.org/x/text/encoding/japanese
+golang.org/x/text/encoding/korean
+golang.org/x/text/encoding/simplifiedchinese
+golang.org/x/text/encoding/traditionalchinese
+golang.org/x/text/encoding/unicode
+golang.org/x/text/internal
+golang.org/x/text/internal/language
+golang.org/x/text/internal/language/compact
+golang.org/x/text/internal/tag
+golang.org/x/text/internal/utf8internal
+golang.org/x/text/language
+golang.org/x/text/runes
+golang.org/x/text/secure/bidirule
+golang.org/x/text/secure/precis
+golang.org/x/text/transform
+golang.org/x/text/unicode/bidi
+golang.org/x/text/unicode/norm
+golang.org/x/text/width
+# golang.org/x/time v0.0.0-20201208040808-7e3f01d25324
+## explicit
+golang.org/x/time/rate
+# gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc
+## explicit
+gopkg.in/alexcesaro/quotedprintable.v3
+# gopkg.in/mail.v2 v2.3.1
+## explicit
+gopkg.in/mail.v2
+# gorm.io/driver/postgres v1.2.3
+## explicit; go 1.14
+gorm.io/driver/postgres
+# gorm.io/gorm v1.22.4
+## explicit; go 1.14
+gorm.io/gorm
+gorm.io/gorm/callbacks
+gorm.io/gorm/clause
+gorm.io/gorm/logger
+gorm.io/gorm/migrator
+gorm.io/gorm/schema
+gorm.io/gorm/utils
