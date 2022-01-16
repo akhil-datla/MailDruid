@@ -48,16 +48,12 @@ func GetEmails(im *imap.Dialer, folder string, count int) (map[int]*imap.Email, 
 }
 
 func FilterEmailsByTag(im *imap.Dialer, emails map[int]*imap.Email, tags, blackListSenders []string, startTime time.Time) (map[int]*imap.Email, error) {
-	filteredUids := make([]int, 0)
+	var err error
 
-	for _, email := range emails {
-		if checkBlackListSenders(email, blackListSenders) {
-			continue
-		} else {
-			if checkTime(email, startTime) {
-				filteredUids = filterTags(email, tags)
-			}
-		}
+	filteredUids, err := filterTags(emails, tags, blackListSenders, startTime)
+
+	if err != nil {
+		return nil, err
 	}
 
 	if len(filteredUids) == 0 {
@@ -111,12 +107,19 @@ func checkTime(email *imap.Email, startTime time.Time) bool {
 	return false
 }
 
-func filterTags(email *imap.Email, tags []string) []int {
+func filterTags(email map[int]*imap.Email, tags, blackListSenders []string, startTime time.Time) ([]int, error) {
+	if len(tags) == 0 {
+		return nil, fmt.Errorf("no tags provided")
+	}
 	filteredUIDs := make([]int, 0)
-	for _, tag := range tags {
-		if strings.Contains(email.Subject, tag) {
-			filteredUIDs = append(filteredUIDs, email.UID)
+	for _, email := range email {
+		for _, tag := range tags {
+			lowerTag := strings.ToLower(tag)
+			lowerSubject := strings.ToLower(email.Subject)
+			if strings.Contains(lowerSubject, lowerTag) && !checkBlackListSenders(email, blackListSenders) && checkTime(email, startTime) {
+				filteredUIDs = append(filteredUIDs, email.UID)
+			}
 		}
 	}
-	return filteredUIDs
+	return filteredUIDs, nil
 }

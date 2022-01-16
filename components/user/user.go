@@ -47,7 +47,7 @@ var h = hermes.Hermes{
 func CreateUser(name, email, receivingEmail, password, domain string, port int) error {
 	id := uuid.NewV4()
 	encryptedPass := base64.RawStdEncoding.EncodeToString(encryption.Encrypt(password))
-	err := postgresmanager.Save(&User{ID: id.String(), Name: name, Email: email, ReceivingEmail: receivingEmail, Password: encryptedPass, Domain: domain, Port: port})
+	err := postgresmanager.Save(&User{ID: id.String(), Name: name, Email: email, ReceivingEmail: receivingEmail, Password: encryptedPass, Domain: domain, Port: port, StartTime: time.Time{}})
 	return err
 }
 

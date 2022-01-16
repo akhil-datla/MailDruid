@@ -50,7 +50,7 @@ func loginUser(c echo.Context) error {
 
 	id, err := user.AuthUser(c.FormValue("email"), c.FormValue("password"))
 	if err != nil {
-		return c.String(http.StatusBadRequest, err.Error())
+		return c.String(http.StatusNotFound, err.Error())
 	}
 
 	sclaims := jwt.StandardClaims{
@@ -265,7 +265,7 @@ func updateTask(c echo.Context) error {
 	claims := u.Claims.(*jwtCustomClaims)
 	id := claims.ID
 
-	err := scheduler.UpdateTask(id, c.FormValue("interval"))
+	err := scheduler.UpdateTask(id, c.FormValue("oldInterval"), c.FormValue("newInterval"))
 
 	if err != nil {
 		return c.String(http.StatusBadRequest, err.Error())
@@ -305,7 +305,7 @@ func generateSummaryandWordCloud(c echo.Context) error {
 
 	summary, fileName, err := user.GenerateSummaryandWordCloud()
 	if err != nil && err.Error() == fmt.Sprintf("no emails found with tags: %s", user.Tags) {
-		return c.String(http.StatusOK, "No new emails to summarize.")
+		return c.String(http.StatusNotFound, "No emails to summarize.")
 	} else if err != nil {
 		return c.String(http.StatusBadRequest, err.Error())
 	}

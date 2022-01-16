@@ -124,18 +124,12 @@ func DeleteTaskforUser(id string) error {
 	return nil
 }
 
-func UpdateTask(id, newInterval string) error {
-	u, err := user.ReadUser(id)
-	if err != nil {
-		return err
-	}
-	
-	err = DeleteTask(id, u.UpdateInterval)
+func UpdateTask(id, oldInterval, newInterval string) error {
+	err := DeleteTask(id, oldInterval)
 	if err != nil {
 		Taskmanager.Mutex.Unlock()
 		return err
 	}
-
 	err = ScheduleNewTask(id, newInterval)
 	if err != nil {
 		Taskmanager.Mutex.Unlock()
@@ -176,16 +170,16 @@ func Schedule(interval string, ctx context.Context) {
 					}
 					summary, fileName, err := user.GenerateSummaryandWordCloud()
 					if err == nil {
-						err = user.SendEmail(summary, fileName, "")
-						if err != nil {
+						err0 := user.SendEmail(summary, fileName, "")
+						if err0 != nil {
 							log.Println(err)
 						}
-						err := os.Remove(fileName)
-						if err != nil {
+						err3 := os.Remove(fileName)
+						if err3 != nil {
 							log.Println(err)
 						}
 					} else if err.Error() == fmt.Sprintf("no emails found with tags: %s", user.Tags) {
-						err1 := user.SendEmail("", "", "No new emails to summarize.")
+						err1 := user.SendEmail("", "", "No emails to summarize.")
 						if err != nil {
 							log.Println(err1)
 						}
