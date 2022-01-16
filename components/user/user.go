@@ -255,7 +255,7 @@ func (u *User) SendEmail(summary, fileName, errorMessage string) error {
 				errorMessage,
 			},
 			Outros: []string{
-				"If you have any questions, please contact me.",
+				"If you have any questions or if something is wrong, please contact us.",
 			},
 		},
 	}

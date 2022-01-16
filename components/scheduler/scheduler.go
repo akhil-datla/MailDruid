@@ -164,28 +164,28 @@ func Schedule(interval string, ctx context.Context) {
 			case <-ticker.C:
 				Taskmanager.Mutex.Lock()
 				for _, id := range Taskmanager.Tasklist[interval] {
-					user, err := user.ReadUser(id)
-					if err != nil {
-						log.Println(err)
+					user, err4 := user.ReadUser(id)
+					if err4 != nil {
+						log.Println(err4)
 					}
 					summary, fileName, err := user.GenerateSummaryandWordCloud()
 					if err == nil {
 						err0 := user.SendEmail(summary, fileName, "")
 						if err0 != nil {
-							log.Println(err)
+							log.Println(err0)
 						}
 						err3 := os.Remove(fileName)
 						if err3 != nil {
-							log.Println(err)
+							log.Println(err3)
 						}
 					} else if err.Error() == fmt.Sprintf("no emails found with tags: %s", user.Tags) {
 						err1 := user.SendEmail("", "", "No emails to summarize.")
-						if err != nil {
+						if err1 != nil {
 							log.Println(err1)
 						}
 					} else {
 						err2 := user.SendEmail("", "", fmt.Sprintf("Error: %s", err.Error()))
-						if err != nil {
+						if err2 != nil {
 							log.Println(err2)
 						}
 					}
