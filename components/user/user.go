@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"main/components/platform/encryption"
 	"main/components/platform/postgresmanager"
+	"time"
 
 	"github.com/lib/pq"
 	"github.com/matcornic/hermes/v2"
@@ -20,18 +21,20 @@ var SMTPServer = ""
 var SMTPPort = 0
 
 type User struct {
-	ID             string `json:"id"`
-	Name           string `json:"name"`
-	Email          string `json:"email"`
-	ReceivingEmail string `json:"receivingEmail"`
-	Password       string `json:"password"`
-	Domain         string `json:"domain"`
-	Port           int   `json:"port"`
-	Folder         string `json:"folder"`
-	Tags           pq.StringArray `gorm:"type:text[]" json:"tags"`
-	SummaryCount   int `json:"summaryCount"`
-	LastUID        string `json:"lastUID"`
-	UpdateInterval string `json:"updateInterval"`
+	ID               string         `json:"id"`
+	Name             string         `json:"name"`
+	Email            string         `json:"email"`
+	ReceivingEmail   string         `json:"receivingEmail"`
+	Password         string         `json:"password"`
+	Domain           string         `json:"domain"`
+	Port             int            `json:"port"`
+	Folder           string         `json:"folder"`
+	Tags             pq.StringArray `gorm:"type:text[]" json:"tags"`
+	BlackListSenders pq.StringArray `gorm:"type:text[]" json:"blackListSenders"`
+	StartTime        time.Time      `json:"startTime"`
+	SummaryCount     int            `json:"summaryCount"`
+	LastUID          string         `json:"lastUID"`
+	UpdateInterval   string         `json:"updateInterval"`
 }
 
 var h = hermes.Hermes{
@@ -177,6 +180,41 @@ func UpdateTags(id string, tags []string) error {
 		return err
 	}
 	err = postgresmanager.Update(&user, User{Tags: tags})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func UpdateBlackListSenders(id string, blackListSenders []string) error {
+	user, err := ReadUser(id)
+	if err != nil {
+		return err
+	}
+	err = postgresmanager.Update(&user, User{BlackListSenders: blackListSenders})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func UpdateStartTime(id string, startTime string) error {
+	user, err := ReadUser(id)
+	if err != nil {
+		return err
+	}
+
+	var startTimeParsed time.Time
+	if startTime != "" {
+		startTimeParsed, err = time.Parse(time.RFC3339, startTime)
+		if err != nil {
+			return err
+		}
+	} else {
+		startTimeParsed = time.Time{}
+	}
+
+	err = postgresmanager.Update(&user, User{StartTime: startTimeParsed})
 	if err != nil {
 		return err
 	}

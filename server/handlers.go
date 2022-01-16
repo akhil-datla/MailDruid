@@ -188,6 +188,39 @@ func updateTags(c echo.Context) error {
 	return c.String(http.StatusOK, "Tags updated successfully.")
 }
 
+func updateBlackListSenders(c echo.Context) error {
+	u := c.Get("user").(*jwt.Token)
+	claims := u.Claims.(*jwtCustomClaims)
+	id := claims.ID
+
+
+	blacklistSenders := []string{}
+	err := json.Unmarshal([]byte(c.FormValue("blacklist")), &blacklistSenders)
+	if err != nil {
+		return c.String(http.StatusBadRequest, "Blacklist must be a string array.")
+	}
+
+	err = user.UpdateBlackListSenders(id, blacklistSenders)
+	if err != nil {
+		return c.String(http.StatusBadRequest, err.Error())
+	}
+
+	return c.String(http.StatusOK, "Disallow sender list updated successfully.")
+
+}
+
+func updateStartTime(c echo.Context) error {
+	u := c.Get("user").(*jwt.Token)
+	claims := u.Claims.(*jwtCustomClaims)
+	id := claims.ID
+
+	err := user.UpdateStartTime(id, c.FormValue("startTime"))
+	if err != nil {
+		return c.String(http.StatusBadRequest, err.Error())
+	}
+	return c.String(http.StatusOK, "Start time updated successfully.")
+}
+
 func updateSummaryCount(c echo.Context) error {
 	u := c.Get("user").(*jwt.Token)
 	claims := u.Claims.(*jwtCustomClaims)
@@ -232,7 +265,7 @@ func updateTask(c echo.Context) error {
 	claims := u.Claims.(*jwtCustomClaims)
 	id := claims.ID
 
-	err := scheduler.UpdateTask(id, c.FormValue("oldInterval"), c.FormValue("newInterval"))
+	err := scheduler.UpdateTask(id, c.FormValue("interval"))
 
 	if err != nil {
 		return c.String(http.StatusBadRequest, err.Error())

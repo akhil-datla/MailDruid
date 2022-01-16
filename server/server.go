@@ -51,10 +51,11 @@ func InitializeRoutes() {
 	r.DELETE("/user/delete", deleteUser)
 
 	r.GET("/user/folders", getFolders)
+
 	r.POST("/user/update/folder", updateFolder)
-
 	r.POST("/user/update/tags", updateTags)
-
+	r.POST("/user/update/senders", updateBlackListSenders)
+	r.POST("/user/update/start", updateStartTime)
 	r.POST("/user/update/summarycount", updateSummaryCount)
 
 	r.POST("/user/schedule/new", newTask)

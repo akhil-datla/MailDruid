@@ -81,7 +81,7 @@ func (u *User) GenerateSummaryandWordCloud() (string, string, error) {
 
 	postgresmanager.Update(u, &User{LastUID: string(bytes)})
 
-	filteredEmails, err := email.FilterEmailsByTag(im, emails, u.Tags...)
+	filteredEmails, err := email.FilterEmailsByTag(im, emails, u.Tags, u.BlackListSenders, u.StartTime)
 	if err != nil {
 		return  "", "", err
 	}

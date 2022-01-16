@@ -124,12 +124,18 @@ func DeleteTaskforUser(id string) error {
 	return nil
 }
 
-func UpdateTask(id, oldInterval, newInterval string) error {
-	err := DeleteTask(id, oldInterval)
+func UpdateTask(id, newInterval string) error {
+	u, err := user.ReadUser(id)
+	if err != nil {
+		return err
+	}
+	
+	err = DeleteTask(id, u.UpdateInterval)
 	if err != nil {
 		Taskmanager.Mutex.Unlock()
 		return err
 	}
+
 	err = ScheduleNewTask(id, newInterval)
 	if err != nil {
 		Taskmanager.Mutex.Unlock()

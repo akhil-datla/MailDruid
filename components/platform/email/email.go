@@ -2,7 +2,9 @@ package email
 
 import (
 	"fmt"
+	"log"
 	"strings"
+	"time"
 
 	"github.com/BrianLeishman/go-imap"
 )
@@ -45,12 +47,15 @@ func GetEmails(im *imap.Dialer, folder string, count int) (map[int]*imap.Email, 
 	return emails, uids, nil
 }
 
-func FilterEmailsByTag(im *imap.Dialer, emails map[int]*imap.Email, tags ...string) (map[int]*imap.Email, error) {
+func FilterEmailsByTag(im *imap.Dialer, emails map[int]*imap.Email, tags, blackListSenders []string, startTime time.Time) (map[int]*imap.Email, error) {
 	filteredUids := make([]int, 0)
+
 	for _, email := range emails {
-		for _, t := range tags {
-			if strings.Contains(email.Subject, t) {
-				filteredUids = append(filteredUids, email.UID)
+		if checkBlackListSenders(email, blackListSenders) {
+			continue
+		} else {
+			if checkTime(email, startTime) {
+				filteredUids = filterTags(email, tags)
 			}
 		}
 	}
@@ -72,4 +77,46 @@ func AggregateEmailBody(emails map[int]*imap.Email) string {
 		body += email.Text + ". "
 	}
 	return body
+}
+
+func getSender(emails imap.EmailAddresses) (string, error) {
+	for address := range emails {
+		return address, nil
+	}
+	return "", fmt.Errorf("no sender found")
+}
+
+func checkBlackListSenders(email *imap.Email, blackListSenders []string) bool {
+	for _, sender := range blackListSenders {
+		address, err := getSender(email.From)
+		if err != nil {
+			log.Printf("error getting sender: %v", err)
+		}
+		if address == sender {
+			return true
+		}
+	}
+	return false
+}
+
+func checkTime(email *imap.Email, startTime time.Time) bool {
+	if startTime.IsZero() {
+		return true
+	}
+	
+	if email.Sent.After(startTime) {
+		return true
+	}
+
+	return false
+}
+
+func filterTags(email *imap.Email, tags []string) []int {
+	filteredUIDs := make([]int, 0)
+	for _, tag := range tags {
+		if strings.Contains(email.Subject, tag) {
+			filteredUIDs = append(filteredUIDs, email.UID)
+		}
+	}
+	return filteredUIDs
 }
