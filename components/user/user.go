@@ -45,10 +45,21 @@ var h = hermes.Hermes{
 }
 
 func CreateUser(name, email, receivingEmail, password, domain string, port int) error {
-	id := uuid.NewV4()
-	encryptedPass := base64.RawStdEncoding.EncodeToString(encryption.Encrypt(password))
-	err := postgresmanager.Save(&User{ID: id.String(), Name: name, Email: email, ReceivingEmail: receivingEmail, Password: encryptedPass, Domain: domain, Port: port, StartTime: time.Time{}})
-	return err
+	var user User
+	err := postgresmanager.Query(User{Email: email}, &user)
+	if err != nil {
+		if err.Error() == "record not found" {
+			id := uuid.NewV4()
+			encryptedPass := base64.RawStdEncoding.EncodeToString(encryption.Encrypt(password))
+			err = postgresmanager.Save(&User{ID: id.String(), Name: name, Email: email, ReceivingEmail: receivingEmail, Password: encryptedPass, Domain: domain, Port: port, StartTime: time.Time{}})
+			if err != nil {
+				return err
+			}
+		}
+	} else {
+		return errors.New("user already exists")
+	}
+	return nil
 }
 
 func AuthUser(email, password string) (string, error) {
