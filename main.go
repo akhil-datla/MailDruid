@@ -28,7 +28,7 @@ func main() {
 	flag.Parse()
 
 	if *sendingEmailPtr == "" || *sendingEmailPasswordPtr == "" || *smtpServerPtr == "" || *smtpPortPtr == 0 {
-		pterm.Error.Printfln("Please provide all the required parameters: email, password, smtp domain and smtp port")
+		pterm.Error.Println("Please provide all the required parameters: email, password, smtp domain and smtp port")
 		os.Exit(1)
 	}
 
