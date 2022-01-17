@@ -6,6 +6,8 @@ import (
 	"main/components/scheduler"
 	"main/components/user"
 	"main/server"
+	"os"
+
 	"github.com/pterm/pterm"
 )
 
@@ -24,6 +26,11 @@ func main() {
 	loggerPtr := flag.Bool("log", false, "Enable HTTP request logging")
 
 	flag.Parse()
+
+	if *sendingEmailPtr == "" || *sendingEmailPasswordPtr == "" || *smtpServerPtr == "" || *smtpPortPtr == 0 {
+		pterm.Error.Printfln("Please provide all the required parameters: email, password, smtp domain and smtp port")
+		os.Exit(1)
+	}
 
 	err := postgresmanager.Open(*dbnamePtr, *dbuserPtr, *dbpassPtr)
 	if err != nil {
@@ -53,4 +60,3 @@ func banner() {
 	pterm.DefaultCenter.Print(pterm.DefaultHeader.WithFullWidth().WithBackgroundStyle(pterm.NewStyle(pterm.BgLightBlue)).WithMargin(10).Sprint("MailDruid"))
 	pterm.Info.Println("Made by Akhil Datla and Alexander Ott")
 }
-
