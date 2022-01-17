@@ -90,7 +90,6 @@ func DeleteTask(id, interval string) error {
 	}
 
 	if len(Taskmanager.Tasklist[interval]) == 0 {
-		cancel()
 		delete(Taskmanager.Tasklist, interval)
 	}
 
@@ -115,7 +114,6 @@ func DeleteTaskforUser(id string) error {
 	}
 
 	if len(Taskmanager.Tasklist[u.UpdateInterval]) == 0 {
-		cancel()
 		delete(Taskmanager.Tasklist, u.UpdateInterval)
 	}
 
