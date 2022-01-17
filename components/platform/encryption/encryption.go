@@ -26,7 +26,8 @@ func Decrypt(ciphertext []byte) []byte {
 	// Before even testing the decryption,
 	// if the text is too small, then it is incorrect
 	if len(ciphertext) < aes.BlockSize {
-		panic("Text is too short")
+		pterm.Error.Println("Ciphertext too short")
+		os.Exit(1)
 	}
 
 	// Get the 16 byte IV
@@ -67,7 +68,8 @@ func Encrypt(plainString string) []byte {
 
 	// Write 16 rand bytes to fill iv
 	if _, err := io.ReadFull(rand.Reader, iv); err != nil {
-		panic(err)
+		pterm.Error.Println("Error creating IV: ", err)
+		os.Exit(1)
 	}
 
 	// Return an encrypted stream
