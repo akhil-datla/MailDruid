@@ -2,15 +2,23 @@ package main
 
 import (
 	"flag"
+	"main/components/platform/encryption"
 	"main/components/platform/postgresmanager"
 	"main/components/scheduler"
 	"main/components/user"
 	"main/confidential"
 	"main/server"
 	"os"
+	"time"
 
+	"github.com/golang-jwt/jwt"
 	"github.com/pterm/pterm"
 )
+
+type jwtCustomClaims struct {
+	Value string
+	jwt.StandardClaims
+}
 
 func main() {
 
@@ -35,7 +43,28 @@ func main() {
 		os.Exit(1)
 	}
 
-	err := postgresmanager.Open(*dbnamePtr, *dbuserPtr, *dbpassPtr)
+	confidential.SigningKey = []byte(*signingKeyPtr)
+	confidential.EncryptionKey = []byte(*encryptionKeyPtr)
+
+	encryption.Encrypt("test")
+	sclaims := jwt.StandardClaims{
+		ExpiresAt: time.Now().Add(time.Second * 30).Unix(),
+	}
+
+	claims := &jwtCustomClaims{
+		Value:          "test",
+		StandardClaims: sclaims,
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	_, err := token.SignedString(confidential.SigningKey)
+	if err != nil {
+		pterm.Error.Println("Error signing token: ", err)
+		os.Exit(1)
+	}
+
+	err = postgresmanager.Open(*dbnamePtr, *dbuserPtr, *dbpassPtr)
 	if err != nil {
 		panic(err)
 	}
@@ -50,8 +79,6 @@ func main() {
 	user.SendingPassword = *sendingEmailPasswordPtr
 	user.SMTPServer = *smtpServerPtr
 	user.SMTPPort = *smtpPortPtr
-	confidential.SigningKey = []byte(*signingKeyPtr)
-	confidential.EncryptionKey = []byte(*encryptionKeyPtr)
 
 	scheduler.Cleanup()
 
