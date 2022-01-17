@@ -5,6 +5,7 @@ import (
 	"main/components/platform/postgresmanager"
 	"main/components/scheduler"
 	"main/components/user"
+	"main/confidential"
 	"main/server"
 	"os"
 
@@ -24,11 +25,13 @@ func main() {
 	smtpServerPtr := flag.String("domain", "", "SMTP server to send messages from")
 	smtpPortPtr := flag.Int("smtpport", 0, "SMTP port to send messages from")
 	loggerPtr := flag.Bool("log", false, "Enable HTTP request logging")
+	signingKeyPtr := flag.String("signingkey", "", "Signing key for JWT")
+	encryptionKeyPtr := flag.String("encryptionkey", "", "Encryption key for password encryption")
 
 	flag.Parse()
 
-	if *sendingEmailPtr == "" || *sendingEmailPasswordPtr == "" || *smtpServerPtr == "" || *smtpPortPtr == 0 {
-		pterm.Error.Println("Please provide all the required parameters: email, password, smtp domain and smtp port")
+	if *sendingEmailPtr == "" || *sendingEmailPasswordPtr == "" || *smtpServerPtr == "" || *smtpPortPtr == 0 || *signingKeyPtr == "" || *encryptionKeyPtr == "" {
+		pterm.Error.Println("Please provide all the required parameters: email, password, smtp domain, smtp port, signing key, encryption key")
 		os.Exit(1)
 	}
 
@@ -47,6 +50,8 @@ func main() {
 	user.SendingPassword = *sendingEmailPasswordPtr
 	user.SMTPServer = *smtpServerPtr
 	user.SMTPPort = *smtpPortPtr
+	confidential.SigningKey = []byte(*signingKeyPtr)
+	confidential.EncryptionKey = []byte(*encryptionKeyPtr)
 
 	scheduler.Cleanup()
 
