@@ -66,13 +66,15 @@ func main() {
 
 	err = postgresmanager.Open(*dbnamePtr, *dbuserPtr, *dbpassPtr)
 	if err != nil {
-		panic(err)
+		pterm.Error.Println("Error opening database: ", err)
+		os.Exit(1)
 	}
 
 	err = postgresmanager.AutoCreateStruct(&user.User{})
 
 	if err != nil {
-		panic(err)
+		pterm.Error.Println("Error creating user table: ", err)
+		os.Exit(1)
 	}
 
 	user.SendingEmail = *sendingEmailPtr

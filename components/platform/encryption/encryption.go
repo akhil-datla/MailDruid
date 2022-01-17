@@ -6,6 +6,9 @@ import (
 	"crypto/rand"
 	"io"
 	"main/confidential"
+	"os"
+
+	"github.com/pterm/pterm"
 )
 
 func Decrypt(ciphertext []byte) []byte {
@@ -16,7 +19,8 @@ func Decrypt(ciphertext []byte) []byte {
 	// Create the AES cipher
 	block, err := aes.NewCipher(key)
 	if err != nil {
-		panic(err)
+		pterm.Error.Println("Error creating AES cipher: ", err)
+		os.Exit(1)
 	}
 
 	// Before even testing the decryption,
@@ -50,7 +54,8 @@ func Encrypt(plainString string) []byte {
 	// Create the AES cipher
 	block, err := aes.NewCipher(key)
 	if err != nil {
-		panic(err)
+		pterm.Error.Println("Error creating AES cipher: ", err)
+		os.Exit(1)
 	}
 
 	// Empty array of 16 + plaintext length
