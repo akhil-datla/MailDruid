@@ -25,6 +25,8 @@ var Taskmanager = &TaskManager{Tasklist: make(tasklist)}
 
 var ctx, cancel = context.WithCancel(context.Background())
 
+var stopChan = make(chan string)
+
 func Cleanup() {
 	c := make(chan os.Signal)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
@@ -90,6 +92,7 @@ func DeleteTask(id, interval string) error {
 	}
 
 	if len(Taskmanager.Tasklist[interval]) == 0 {
+		stopChan <- interval
 		delete(Taskmanager.Tasklist, interval)
 	}
 
@@ -114,6 +117,7 @@ func DeleteTaskforUser(id string) error {
 	}
 
 	if len(Taskmanager.Tasklist[u.UpdateInterval]) == 0 {
+		stopChan <- u.UpdateInterval
 		delete(Taskmanager.Tasklist, u.UpdateInterval)
 	}
 
@@ -159,6 +163,10 @@ func Schedule(interval string, ctx context.Context) {
 			select {
 			case <-ctx.Done():
 				return
+			case i := <-stopChan:
+				if i == interval {
+					return
+				}
 			case <-ticker.C:
 				Taskmanager.Mutex.Lock()
 				for _, id := range Taskmanager.Tasklist[interval] {
