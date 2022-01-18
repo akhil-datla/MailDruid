@@ -34,7 +34,7 @@ func Cleanup() {
 		<-c
 		log.Println("Stopping processes....")
 		cancel()
-		os.Exit(1)
+		os.Exit(0)
 	}()
 
 }
