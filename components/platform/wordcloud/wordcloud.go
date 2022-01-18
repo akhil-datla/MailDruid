@@ -27,7 +27,7 @@ func Summarize(text string, maxLength int) string {
 
 	var summary string
 	for _, sentence := range result {
-		summary += sentence
+		summary += sentence + " "
 	}
 	return summary
 }
