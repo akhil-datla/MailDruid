@@ -97,9 +97,16 @@ func updateUser(c echo.Context) error {
 	claims := u.Claims.(*jwtCustomClaims)
 	id := claims.ID
 
-	port, err := strconv.Atoi(c.FormValue("port"))
-	if err != nil {
-		return c.String(http.StatusBadRequest, "Port must be a number.")
+	var port int
+	var err error
+
+	if c.FormValue("port") != "" {
+		port, err = strconv.Atoi(c.FormValue("port"))
+		if err != nil {
+			return c.String(http.StatusBadRequest, "Port must be a number.")
+		}
+	} else {
+		port = 0
 	}
 
 	errors := user.UpdateUser(id, c.FormValue("name"), c.FormValue("email"), c.FormValue("receivingEmail"), c.FormValue("oldPassword"), c.FormValue("newPassword"), c.FormValue("domain"), c.FormValue("folder"), port)
