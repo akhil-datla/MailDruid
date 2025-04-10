@@ -92,5 +92,5 @@ func main() {
 
 func banner() {
 	pterm.DefaultCenter.Print(pterm.DefaultHeader.WithFullWidth().WithBackgroundStyle(pterm.NewStyle(pterm.BgLightBlue)).WithMargin(10).Sprint("MailDruid"))
-	pterm.Info.Println("Made by Akhil Datla and Alexander Ott")
+	pterm.Info.Println("Made by Akhil Datla")
 }
