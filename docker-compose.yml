@@ -1,0 +1,42 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      MAILDRUID_DATABASE_HOST: postgres
+      MAILDRUID_DATABASE_PORT: 5432
+      MAILDRUID_DATABASE_USER: maildruid
+      MAILDRUID_DATABASE_PASSWORD: maildruid
+      MAILDRUID_DATABASE_NAME: maildruid
+      MAILDRUID_DATABASE_SSLMODE: disable
+      MAILDRUID_AUTH_SIGNING_KEY: ${MAILDRUID_AUTH_SIGNING_KEY:?Set MAILDRUID_AUTH_SIGNING_KEY}
+      MAILDRUID_AUTH_ENCRYPTION_KEY: ${MAILDRUID_AUTH_ENCRYPTION_KEY:?Set MAILDRUID_AUTH_ENCRYPTION_KEY (16/24/32 bytes)}
+      MAILDRUID_SMTP_HOST: ${MAILDRUID_SMTP_HOST:?Set MAILDRUID_SMTP_HOST}
+      MAILDRUID_SMTP_PORT: ${MAILDRUID_SMTP_PORT:-587}
+      MAILDRUID_SMTP_EMAIL: ${MAILDRUID_SMTP_EMAIL:?Set MAILDRUID_SMTP_EMAIL}
+      MAILDRUID_SMTP_PASSWORD: ${MAILDRUID_SMTP_PASSWORD:?Set MAILDRUID_SMTP_PASSWORD}
+      MAILDRUID_LOG_FORMAT: json
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: maildruid
+      POSTGRES_PASSWORD: maildruid
+      POSTGRES_DB: maildruid
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U maildruid"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

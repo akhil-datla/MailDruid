@@ -1,0 +1,35 @@
+# MailDruid Configuration
+# Copy this to config.yaml and fill in your values.
+# All values can also be set via environment variables with MAILDRUID_ prefix.
+# Example: server.port -> MAILDRUID_SERVER_PORT
+
+server:
+  port: 8080
+  read_timeout: 30s
+  write_timeout: 30s
+  allow_origins:
+    - "*"
+  rate_limit: 20 # requests per second
+
+database:
+  host: localhost
+  port: 5432
+  user: maildruid
+  password: maildruid
+  name: maildruid
+  sslmode: disable
+
+smtp:
+  host: smtp.gmail.com
+  port: 587
+  email: your-email@gmail.com
+  password: your-app-password
+
+auth:
+  signing_key: your-jwt-signing-key-here        # Required
+  encryption_key: your-32-byte-encryption-key!!  # Required: must be exactly 16, 24, or 32 bytes
+  token_expiry: 24h
+
+log:
+  level: info    # debug, info, warn, error
+  format: text   # text or json
