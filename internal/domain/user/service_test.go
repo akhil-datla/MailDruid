@@ -86,14 +86,16 @@ func TestAuthenticateSuccess(t *testing.T) {
 	svc, _ := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name:           "Auth User",
 		Email:          "auth@example.com",
 		ReceivingEmail: "recv@example.com",
 		Password:       "mypassword",
 		Domain:         "imap.example.com",
 		Port:           993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 
 	id, err := svc.Authenticate(ctx, "auth@example.com", "mypassword")
 	if err != nil {
@@ -108,14 +110,16 @@ func TestAuthenticateWrongPassword(t *testing.T) {
 	svc, _ := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name:           "Auth User",
 		Email:          "auth2@example.com",
 		ReceivingEmail: "recv@example.com",
 		Password:       "correctpass",
 		Domain:         "imap.example.com",
 		Port:           993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 
 	_, err := svc.Authenticate(ctx, "auth2@example.com", "wrongpass")
 	if err != ErrInvalidPassword {
@@ -137,14 +141,16 @@ func TestGetByID(t *testing.T) {
 	svc, _ := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name:           "Get User",
 		Email:          "get@example.com",
 		ReceivingEmail: "recv@example.com",
 		Password:       "pass",
 		Domain:         "imap.example.com",
 		Port:           993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 
 	id, _ := svc.Authenticate(ctx, "get@example.com", "pass")
 	u, err := svc.GetByID(ctx, id)

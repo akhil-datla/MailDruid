@@ -72,7 +72,7 @@ func setupTestEnv(t *testing.T) *testEnv {
 	// Frontend
 	e.GET("/*", echo.WrapHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(200)
-		w.Write([]byte("<!doctype html>"))
+		_, _ = w.Write([]byte("<!doctype html>"))
 	})))
 
 	return &testEnv{echo: e, userSvc: userSvc, authCfg: authCfg}
