@@ -176,14 +176,16 @@ func TestUpdateProfile(t *testing.T) {
 	svc, _ := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name:           "Old Name",
 		Email:          "update@example.com",
 		ReceivingEmail: "recv@example.com",
 		Password:       "pass",
 		Domain:         "imap.example.com",
 		Port:           993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 
 	id, _ := svc.Authenticate(ctx, "update@example.com", "pass")
 
@@ -210,14 +212,16 @@ func TestUpdatePassword(t *testing.T) {
 	svc, _ := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name:           "Pass User",
 		Email:          "passchange@example.com",
 		ReceivingEmail: "recv@example.com",
 		Password:       "oldpass",
 		Domain:         "imap.example.com",
 		Port:           993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 
 	id, _ := svc.Authenticate(ctx, "passchange@example.com", "oldpass")
 
@@ -248,14 +252,16 @@ func TestUpdatePasswordWrongOld(t *testing.T) {
 	svc, _ := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name:           "User",
 		Email:          "wrongold@example.com",
 		ReceivingEmail: "recv@example.com",
 		Password:       "realpass",
 		Domain:         "imap.example.com",
 		Port:           993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 
 	id, _ := svc.Authenticate(ctx, "wrongold@example.com", "realpass")
 
@@ -274,14 +280,16 @@ func TestDeleteUser(t *testing.T) {
 	svc, repo := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name:           "Delete Me",
 		Email:          "delete@example.com",
 		ReceivingEmail: "recv@example.com",
 		Password:       "pass",
 		Domain:         "imap.example.com",
 		Port:           993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 
 	id, _ := svc.Authenticate(ctx, "delete@example.com", "pass")
 
@@ -300,10 +308,12 @@ func TestUpdateTags(t *testing.T) {
 	svc, _ := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name: "Tag User", Email: "tags@example.com", ReceivingEmail: "r@ex.com",
 		Password: "p", Domain: "imap.ex.com", Port: 993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 	id, _ := svc.Authenticate(ctx, "tags@example.com", "p")
 
 	err := svc.UpdateTags(ctx, id, []string{"report", "weekly"})
@@ -321,10 +331,12 @@ func TestUpdateBlackListSenders(t *testing.T) {
 	svc, _ := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name: "BL User", Email: "bl@example.com", ReceivingEmail: "r@ex.com",
 		Password: "p", Domain: "imap.ex.com", Port: 993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 	id, _ := svc.Authenticate(ctx, "bl@example.com", "p")
 
 	err := svc.UpdateBlackListSenders(ctx, id, []string{"spam@co.com"})
@@ -342,10 +354,12 @@ func TestUpdateFolder(t *testing.T) {
 	svc, _ := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name: "Folder User", Email: "folder@example.com", ReceivingEmail: "r@ex.com",
 		Password: "p", Domain: "imap.ex.com", Port: 993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 	id, _ := svc.Authenticate(ctx, "folder@example.com", "p")
 
 	err := svc.UpdateFolder(ctx, id, "INBOX")
@@ -363,10 +377,12 @@ func TestUpdateStartTime(t *testing.T) {
 	svc, _ := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name: "ST User", Email: "st@example.com", ReceivingEmail: "r@ex.com",
 		Password: "p", Domain: "imap.ex.com", Port: 993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 	id, _ := svc.Authenticate(ctx, "st@example.com", "p")
 
 	err := svc.UpdateStartTime(ctx, id, "2025-01-15T00:00:00Z")
@@ -384,10 +400,12 @@ func TestUpdateStartTimeInvalid(t *testing.T) {
 	svc, _ := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name: "ST2", Email: "st2@example.com", ReceivingEmail: "r@ex.com",
 		Password: "p", Domain: "imap.ex.com", Port: 993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 	id, _ := svc.Authenticate(ctx, "st2@example.com", "p")
 
 	err := svc.UpdateStartTime(ctx, id, "not-a-date")
@@ -400,10 +418,12 @@ func TestUpdateSummaryCount(t *testing.T) {
 	svc, _ := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name: "SC User", Email: "sc@example.com", ReceivingEmail: "r@ex.com",
 		Password: "p", Domain: "imap.ex.com", Port: 993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 	id, _ := svc.Authenticate(ctx, "sc@example.com", "p")
 
 	err := svc.UpdateSummaryCount(ctx, id, 10)
@@ -421,10 +441,12 @@ func TestUpdateInterval(t *testing.T) {
 	svc, _ := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name: "Int User", Email: "int@example.com", ReceivingEmail: "r@ex.com",
 		Password: "p", Domain: "imap.ex.com", Port: 993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 	id, _ := svc.Authenticate(ctx, "int@example.com", "p")
 
 	err := svc.UpdateInterval(ctx, id, "30")
@@ -442,10 +464,12 @@ func TestDecryptPassword(t *testing.T) {
 	svc, _ := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name: "Dec User", Email: "dec@example.com", ReceivingEmail: "r@ex.com",
 		Password: "my-secret-pass", Domain: "imap.ex.com", Port: 993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 	id, _ := svc.Authenticate(ctx, "dec@example.com", "my-secret-pass")
 
 	u, _ := svc.GetByID(ctx, id)
@@ -462,10 +486,12 @@ func TestSaveLastUID(t *testing.T) {
 	svc, _ := setupTestService(t)
 	ctx := context.Background()
 
-	svc.Create(ctx, CreateInput{
+	if err := svc.Create(ctx, CreateInput{
 		Name: "UID User", Email: "uid@example.com", ReceivingEmail: "r@ex.com",
 		Password: "p", Domain: "imap.ex.com", Port: 993,
-	})
+	}); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
 	id, _ := svc.Authenticate(ctx, "uid@example.com", "p")
 
 	u, _ := svc.GetByID(ctx, id)
@@ -485,10 +511,12 @@ func TestListAll(t *testing.T) {
 	ctx := context.Background()
 
 	for i, email := range []string{"a@ex.com", "b@ex.com", "c@ex.com"} {
-		svc.Create(ctx, CreateInput{
+		if err := svc.Create(ctx, CreateInput{
 			Name: "User", Email: email, ReceivingEmail: "r@ex.com",
 			Password: "p", Domain: "imap.ex.com", Port: 993 + i,
-		})
+		}); err != nil {
+			t.Fatalf("Create: %v", err)
+		}
 	}
 
 	users, err := svc.ListAll(ctx)
